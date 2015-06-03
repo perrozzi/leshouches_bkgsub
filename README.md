@@ -1,7 +1,8 @@
-# leshouches_bkgsub
-A quick study on the impact of irreducible-background subtraction
+# A quick study on the impact of irreducible-background subtraction
+Project started at Les Houches 2015 by
 Jon Butterworth, Paolo Francavilla, Frank Krauss, Carlo Pandini, Luca Parrozzi, …
 
+Wiki page: http://phystev.cnrs.fr/wiki/2015:groups:tools:backgrounds
 
 Processes to consider:
 
