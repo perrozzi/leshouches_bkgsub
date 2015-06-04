@@ -13,16 +13,8 @@ namespace Rivet {
 
   /// ATLAS Wee Wemu Wmumu analysis at Z TeV
   class WWbb : public Analysis {
-  public:
-
-    /// Default constructor
-    WWbb()
-    : Analysis("WWbb")
-    {    }
-
-    double lepton_etamax = 2.4;
-    double lepton_ptmin = 25*GeV;
-    
+  private:
+    double lepton_etamax,lepton_ptmin;
     MissingMomentum MET_4v;
     Particle lepton_m, lepton_p, nu_m, nu_p;
     double m_ll, m_trans_llMET, m_Wm, m_Wp, MET;
@@ -34,8 +26,14 @@ namespace Rivet {
     double massJJ_min_WBF, deltayJJ_min_WBF;
     double m_trans_llMET_min_WBF, m_ll_min_WBF;
     double ptlep1_min_WBF,ptlep2_min_WBF,MET_min_WBF;
-
     // Hist1D         cuts_WW, cuts_VBF, cuts_HH, cuts_Mass, cuts_BL (Mass_BL)
+  public:
+
+    /// Default constructor
+    WWbb() : Analysis("WWbb"),
+	     lepton_etamax(2.4), lepton_ptmin(25.*GeV)
+    {}
+
 
     void init() {
       FinalState fs;
