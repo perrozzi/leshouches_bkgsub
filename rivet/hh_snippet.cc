@@ -5,10 +5,10 @@ double bjets_central_min_hh;
 double m_trans_llMET_min_hh, m_trans_llMET_max_hh;
 
 void initialiseHistos_hh() {
-  Histo1DPtr cuts_hh;
+  Histo1DPtr cuts_hh, njets_nbjets_before_hh, njets_nbjets_after_hh;
   cuts_hh     = bookHisto1D(8,-0.5,7.5);
-  njets_nbjets_before     = bookHisto1D(10,-0.5,9.5, 10,-0.5,9.5);
-  njets_nbjets_after     = bookHisto1D(10,-0.5,9.5, 10,-0.5,9.5);
+  njets_nbjets_before_hh     = bookHisto1D(10,-0.5,9.5, 10,-0.5,9.5);
+  njets_nbjets_after_hh     = bookHisto1D(10,-0.5,9.5, 10,-0.5,9.5);
 }
 
 void analyse_hh(const Event& event) {
@@ -44,7 +44,7 @@ void analyse_hh(const Event& event) {
  
   // Selection
   if(METrel <= METrel_min_hh) return;
-  njets_nbjets_before->fill(alljets.size(), bjets_central.size());
+  njets_nbjets_before_hh->fill(alljets.size(), bjets_central.size());
   cuts_hh->fill(2,weight);
 
   if(mass_ll <= mass_ll_min_hh) return;
@@ -57,7 +57,7 @@ void analyse_hh(const Event& event) {
   cuts_hh->fill(5,weight);
 
   if(mBB < mBB_min_hh || mBB > mBB_max_hh) return;
-  njets_nbjets_after->fill(alljets.size(), bjets_central.size());
+  njets_nbjets_after_hh->fill(alljets.size(), bjets_central.size());
   cuts_hh->fill(6,weight);
 
 }
