@@ -219,9 +219,10 @@ namespace Rivet {
     // WBF
     ////////////////////////////////////////////////////////
     void initialize_Histos_WBF(){
-      cuts_WBF     = bookHisto1D(5,-0.5,4.5);
-      njets_before_WBF = bookHisto1D(10,-0.5,9.5);
-      njets_after_WBF  = bookHisto1D(10,-0.5,9.5);
+      
+      cuts_WBF     = bookHisto1D("cuts_WBF",5,-0.5,4.5);
+      njets_before_WBF = bookHisto1D("njets_before_WBF",10,-0.5,9.5);
+      njets_after_WBF  = bookHisto1D("njets_after_WBF",10,-0.5,9.5);
 
     }
     
