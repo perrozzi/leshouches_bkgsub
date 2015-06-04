@@ -16,6 +16,7 @@ namespace Rivet {
   private:
     double lepton_etamax,lepton_ptmin;
     double jet_etamax,jet_ptmin;
+    double lepton_jet_isolation_dR;
     FourMomentum MET_4v;
     Particle lepton_m, lepton_p, nu_m, nu_p;
     double m_ll, m_trans_llMET, m_Wm, m_Wp, MET;
@@ -34,8 +35,9 @@ namespace Rivet {
 
     /// Default constructor
     WWbb() : Analysis("WWbb"),
-	     lepton_etamax(2.4), lepton_ptmin(25.*GeV)
-	     jet_etamax(4.5), jet_ptmin(25.*GeV)
+	     lepton_etamax(2.4), lepton_ptmin(25.*GeV),
+	     jet_etamax(4.5), jet_ptmin(25.*GeV),
+       lepton_jet_isolation_dR(0.4)
     {}
 
 
@@ -141,18 +143,25 @@ namespace Rivet {
       // leptons
       ////////////////////////////////////////////////////////
       const  vector<DressedLepton>& muon_dressed = applyProjection<DressedLeptons>(event, "muon_dressed").dressedLeptons();
+      vector<DressedLepton> muon_dummy;
+      muon_dummy.insert(muon_dummy.end(), muon_dressed.begin(), muon_dressed.end());
+      
       const  vector<DressedLepton>& electron_dressed = applyProjection<DressedLeptons>(event, "electron_dressed").dressedLeptons();
+      vector<DressedLepton> electron_dummy;
+      electron_dummy.insert(electron_dummy.end(), electron_dressed.begin(), electron_dressed.end());
+
 
       ////////////////////////////////////////////////////////
       // isolated leptons
       ////////////////////////////////////////////////////////
       vector<DressedLepton> muon_isolated, electron_isolated;
-      foreach (DressedLepton& l1, muon_dressed) {
+      foreach (DressedLepton& l1, muon_dummy) {
         muon_isolated.push_back(l1);//keep e with highest pT
       }
-      foreach (DressedLepton& l1, electron_dressed) {
+      foreach (DressedLepton& l1, electron_dummy) {
         electron_isolated.push_back(l1);//keep e with highest pT
       }
+
       
       /////////////////////////////////////////////////////////////////////////
       // JETS
@@ -162,14 +171,22 @@ namespace Rivet {
         if (j.absrap() > jet_etamax ) continue;
         alljets.push_back(j);
         bool deltaRcontrol = true;
-        foreach (DressedLepton& fl,fiducial_lepton) {
-          if (fl.constituentLepton().abspid() == PID::ELECTRON) { //electrons
-            double deltaRjets = deltaR(fl.constituentLepton().momentum(), j.momentum(), RAPIDITY);
-            if (deltaRjets <= 0.3) deltaRcontrol = false; //false if at least one electron is in the overlap region
-          }
+        foreach (DressedLepton& fl,muon_isolated) {
+          double deltaRjets = deltaR(fl.constituentLepton().momentum(), j.momentum(), RAPIDITY);
+          if (deltaRjets <= lepton_jet_isolation_dR) deltaRcontrol = false; //false if at least one electron is in the overlap region
+        }
+        foreach (DressedLepton& fl,electron_isolated) {
+          double deltaRjets = deltaR(fl.constituentLepton().momentum(), j.momentum(), RAPIDITY);
+          if (deltaRjets <= lepton_jet_isolation_dR) deltaRcontrol = false; //false if at least one electron is in the overlap region
         }
         if (deltaRcontrol) vetojets.push_back(j);
       }
+      
+      
+      // DUMMY STUFF
+      if(muon_isolated.size()==0 || electron_isolated.size()==0 ) return;
+      lepton_m = muon_isolated[0];
+      lepton_p = electron_isolated[0];
       
       ////////////////////////////////////////////////////////
       // RUN ANALYSES
