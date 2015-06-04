@@ -26,7 +26,9 @@ namespace Rivet {
     double massJJ_min_WBF, deltayJJ_min_WBF;
     double m_trans_llMET_min_WBF, m_ll_min_WBF;
     double ptlep1_min_WBF,ptlep2_min_WBF,MET_min_WBF;
-    // Hist1D         cuts_WW, cuts_VBF, cuts_HH, cuts_Mass, cuts_BL (Mass_BL)
+
+    Histo1DPtr cuts_WBF, njets_before_WBF, njets_after_WBF;
+
   public:
 
     /// Default constructor
@@ -133,7 +135,7 @@ namespace Rivet {
       
     }
     
-    void analyze_WW(){
+    void analyze_WW(const Event& event){
       
     }
 
@@ -141,14 +143,13 @@ namespace Rivet {
     // WBF
     ////////////////////////////////////////////////////////
     void initialize_Histos_WBF(){
-      Histo1DPtr cuts_WBF;
       cuts_WBF     = bookHisto1D(5,-0.5,4.5);
       njets_before_WBF = bookHisto1D(10,-0.5,9.5);
       njets_after_WBF  = bookHisto1D(10,-0.5,9.5);
 
     }
     
-    void analyze_WBF(){
+    void analyze_WBF(const Event& event){
 
       const double weight = event.weight();
       njets_before_WBF->fill(alljets.size(),weight);
@@ -184,7 +185,7 @@ namespace Rivet {
       
     }
     
-    void analyze_HH(){
+    void analyze_HH(const Event& event){
       
     }
 
@@ -195,12 +196,12 @@ namespace Rivet {
       
     }
     
-    void analyze_BL(){
+    void analyze_BL(const Event& event){
       
     }
 
     /// Do the analysis
-    void analyze(const Event& e) {
+    void analyze(const Event& event) {
 
       analyze_WW();
       
