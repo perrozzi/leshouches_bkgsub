@@ -15,7 +15,8 @@ namespace Rivet {
   class WWbb : public Analysis {
   private:
     double lepton_etamax,lepton_ptmin;
-    MissingMomentum MET_4v;
+    double jet_etamax,jet_ptmin;
+    FourMomentum MET_4v;
     Particle lepton_m, lepton_p, nu_m, nu_p;
     double m_ll, m_trans_llMET, m_Wm, m_Wp, MET;
     Jets alljets, lightjets, bjets_central, bjets_forward;
@@ -34,20 +35,22 @@ namespace Rivet {
     /// Default constructor
     WWbb() : Analysis("WWbb"),
 	     lepton_etamax(2.4), lepton_ptmin(25.*GeV)
+	     jet_etamax(4.5), jet_ptmin(25.*GeV)
     {}
 
 
     void init() {
+      
       FinalState fs;
       
       ////////////////////////////////////////////////////////
       // NEUTRINOS
       ////////////////////////////////////////////////////////
 
-      LeadingParticlesFinalState leadingNeutrinos(FinalState(-50, 50, 0*GeV));
-      leadingNeutrinos.addParticleIdPair(12);
-      leadingNeutrinos.addParticleIdPair(14);
-      addProjection(leadingNeutrinos, "neutrinos");
+      LeadingParticlesFinalState neutrinos(FinalState(-50, 50, 0*GeV));
+      neutrinos.addParticleIdPair(12);
+      neutrinos.addParticleIdPair(14);
+      addProjection(neutrinos, "neutrinos");
 
       ////////////////////////////////////////////////////////
       // BARE LEPTONS
@@ -85,27 +88,23 @@ namespace Rivet {
       addProjection(electron_dressed, "electron_dressed");
 
 
+      ////////////////////////////////////////////////////////
+      // JETS
+      ////////////////////////////////////////////////////////
 
-      // MissingMomentum met(fs);
-      // addProjection(met, "MET");
+      VetoedFinalState jetinput;
+      // jetinput.addVetoOnThisFinalState(muon_bare);
+      jetinput.addVetoOnThisFinalState(neutrinos);
 
+      FastJets jetpro(jetinput, FastJets::ANTIKT, 0.4);
+      addProjection(jetpro, "jet");
+      
+      ////////////////////////////////////////////////////////
+      // MET
+      ////////////////////////////////////////////////////////
 
-      // IdentifiedFinalState bare_EL(fs);
-      // bare_EL.acceptIdPair(PID::ELECTRON);
-
-      // IdentifiedFinalState bare_MU(fs);
-      // bare_MU.acceptIdPair(PID::MUON);
-
-      // IdentifiedFinalState neutrinoFS(fs);
-      // neutrinoFS.acceptNeutrinos();
-      // addProjection(neutrinoFS, "Neutrinos");
-
-      // VetoedFinalState jetinput;
-      // jetinput.addVetoOnThisFinalState(bare_MU);
-      // jetinput.addVetoOnThisFinalState(neutrinoFS);
-
-      // FastJets jetpro(jetinput, FastJets::ANTIKT, 0.4);
-      // addProjection(jetpro, "jet");
+      MissingMomentum met(fs);
+      addProjection(met, "MET");
 
 
       initialize_Histos();
@@ -127,6 +126,66 @@ namespace Rivet {
       initialize_Histos_BL();
       
     };
+
+    /// Do the analysis
+    void analyze(const Event& event) {
+
+      ////////////////////////////////////////////////////////
+      // MET
+      ////////////////////////////////////////////////////////
+      const MissingMomentum& MET_tmp = applyProjection<MissingMomentum>(event, "MET");
+      MET_4v = -MET_tmp.visibleMomentum();
+      MET = MET_4v.pT();
+
+      ////////////////////////////////////////////////////////
+      // leptons
+      ////////////////////////////////////////////////////////
+      const  vector<DressedLepton>& muon_dressed = applyProjection<DressedLeptons>(event, "muon_dressed").dressedLeptons();
+      const  vector<DressedLepton>& electron_dressed = applyProjection<DressedLeptons>(event, "electron_dressed").dressedLeptons();
+
+      ////////////////////////////////////////////////////////
+      // isolated leptons
+      ////////////////////////////////////////////////////////
+      vector<DressedLepton> muon_isolated, electron_isolated;
+      foreach (DressedLepton& l1, muon_dressed) {
+        muon_isolated.push_back(l1);//keep e with highest pT
+      }
+      foreach (DressedLepton& l1, electron_dressed) {
+        electron_isolated.push_back(l1);//keep e with highest pT
+      }
+      
+      /////////////////////////////////////////////////////////////////////////
+      // JETS
+      /////////////////////////////////////////////////////////////////////////
+      Jets alljets, vetojets;
+      foreach (const Jet& j, applyProjection<FastJets>(event, "jet").jetsByPt(jet_ptmin)) {
+        if (j.absrap() > jet_etamax ) continue;
+        alljets.push_back(j);
+        bool deltaRcontrol = true;
+        foreach (DressedLepton& fl,fiducial_lepton) {
+          if (fl.constituentLepton().abspid() == PID::ELECTRON) { //electrons
+            double deltaRjets = deltaR(fl.constituentLepton().momentum(), j.momentum(), RAPIDITY);
+            if (deltaRjets <= 0.3) deltaRcontrol = false; //false if at least one electron is in the overlap region
+          }
+        }
+        if (deltaRcontrol) vetojets.push_back(j);
+      }
+      
+      ////////////////////////////////////////////////////////
+      // RUN ANALYSES
+      ////////////////////////////////////////////////////////
+
+      analyze_WW(event);
+      
+      analyze_WBF(event);
+      
+      analyze_HH(event);
+      
+      analyze_BL(event);
+      
+      
+    }
+
 
     ////////////////////////////////////////////////////////
     // WW
@@ -199,20 +258,6 @@ namespace Rivet {
     void analyze_BL(const Event& event){
       
     }
-
-    /// Do the analysis
-    void analyze(const Event& event) {
-
-      analyze_WW(event);
-      
-      analyze_WBF(event);
-      
-      analyze_HH(event);
-      
-      analyze_BL(event);
-      
-    }
-
 
     /// Finalize
     void finalize() {
