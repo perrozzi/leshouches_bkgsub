@@ -1,0 +1,26 @@
+# BEGIN PLOT
+DrawOnly=/afs/cern.ch/work/c/cpandini/leshouches/leshouches_bkgsub/rivet/WWbb/Rivet.yoda/WWbb/njets_before_WBF
+Legend=1
+LogY=1
+# END PLOT
+
+# BEGIN HISTOGRAM /afs/cern.ch/work/c/cpandini/leshouches/leshouches_bkgsub/rivet/WWbb/Rivet.yoda/WWbb/njets_before_WBF
+LineColor={[HTML]{EE3311}}
+LineStyle=solid
+Path=/afs/cern.ch/work/c/cpandini/leshouches/leshouches_bkgsub/rivet/WWbb/Rivet.yoda/WWbb/njets_before_WBF
+Title=Rivet
+XLabel=
+YLabel=
+# xlow	 xhigh	 val	 errminus	 errplus
+-5.000000e-01	5.000000e-01	0.000000e+00	0.000000e+00	0.000000e+00
+5.000000e-01	1.500000e+00	6.295874e+03	3.773592e+03	3.773592e+03
+1.500000e+00	2.500000e+00	1.633634e+04	8.540790e+03	8.540790e+03
+2.500000e+00	3.500000e+00	5.855843e+04	3.164486e+04	3.164486e+04
+3.500000e+00	4.500000e+00	2.137631e+03	1.469438e+03	1.469438e+03
+4.500000e+00	5.500000e+00	1.548366e+04	1.266925e+04	1.266925e+04
+5.500000e+00	6.500000e+00	2.571847e+01	2.571847e+01	2.571847e+01
+6.500000e+00	7.500000e+00	0.000000e+00	0.000000e+00	0.000000e+00
+7.500000e+00	8.500000e+00	0.000000e+00	0.000000e+00	0.000000e+00
+8.500000e+00	9.500000e+00	0.000000e+00	0.000000e+00	0.000000e+00
+# END HISTOGRAM
+

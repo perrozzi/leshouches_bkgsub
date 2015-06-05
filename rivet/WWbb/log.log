@@ -1,0 +1,15 @@
+/cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/gcc/4.9.1-cms/bin/g++ -o "RivetWWbb.so" -shared -fPIC -I/cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/rivet/2.2.1-eccfad2/include -I/cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/hepmc/2.06.07-eccfad/include -I/cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/yoda/1.3.1-eccfad/include -I/cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/fastjet/3.1.0-odfocd/include -I/cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/gsl/1.10-cms/include -I/cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/boost/1.57.0-eccfad/include -pedantic -ansi -Wall -Wno-long-long -Wno-format -Werror=uninitialized -Werror=delete-non-virtual-dtor -O2 -std=c++0x -Wl,--no-as-needed -L/cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/rivet/2.2.1-eccfad2/lib -L/cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/hepmc/2.06.07-eccfad/lib -L/cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/yoda/1.3.1-eccfad/lib -Wl,-rpath,/cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/fastjet/3.1.0-odfocd/lib -lm -L/cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/fastjet/3.1.0-odfocd/lib -lfastjettools -lfastjet -lfastjetplugins -lsiscone_spherical -lsiscone WWbb.cc -lRivet
+In file included from /cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/rivet/2.2.1-eccfad2/include/Rivet/Tools/RivetFastJet.hh:9:0,
+                 from /cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/rivet/2.2.1-eccfad2/include/Rivet/Jet.fhh:6,
+                 from /cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/rivet/2.2.1-eccfad2/include/Rivet/ParticleBase.hh:5,
+                 from /cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/rivet/2.2.1-eccfad2/include/Rivet/Particle.hh:6,
+                 from /cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/rivet/2.2.1-eccfad2/include/Rivet/Projection.hh:163,
+                 from /cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/rivet/2.2.1-eccfad2/include/Rivet/Cmp.hh:6,
+                 from /cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/rivet/2.2.1-eccfad2/include/Rivet/Projection.hh:161,
+                 from /cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/rivet/2.2.1-eccfad2/include/Rivet/Event.hh:6,
+                 from /cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/rivet/2.2.1-eccfad2/include/Rivet/Analysis.hh:7,
+                 from WWbb.cc:2:
+/cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/fastjet/3.1.0-odfocd/include/fastjet/ClusterSequenceArea.hh: In member function 'void fastjet::ClusterSequenceArea::initialize_and_run_cswa(const std::vector<_RealType>&, const fastjet::JetDefinition&)':
+/cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/fastjet/3.1.0-odfocd/include/fastjet/ClusterSequenceArea.hh:256:69: warning: 'auto_ptr' is deprecated (declared at /cvmfs/cms.cern.ch/slc6_amd64_gcc491/external/gcc/4.9.1-cms/include/c++/4.9.1/backward/auto_ptr.h:87) [-Wdeprecated-declarations]
+   _area_base = std::auto_ptr<ClusterSequenceAreaBase>(_area_base_ptr);
+                                                                     ^
