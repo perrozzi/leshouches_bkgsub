@@ -16,7 +16,7 @@ namespace Rivet {
   private:
     double lepton_etamax,lepton_ptmin;
     double jet_etamax,jet_ptmin;
-    double lepton_jet_isolation_dR;
+    double lepton_jet_isolation_dR, lepton_iso_dR, lepton_iso_frac;
     FourMomentum MET_4v;
     Particle lepton_m, lepton_p, nu_m, nu_p;
     double m_ll, m_trans_llMET, m_Wm, m_Wp, MET;
@@ -24,6 +24,7 @@ namespace Rivet {
     double m_tm, m_tp;
     // map<jet,GenParticle>    bflavours
     Jet bjet_p, bjet_m;
+    VetoedFinalState jetinput;
 
     double massJJ_min_WBF, deltayJJ_min_WBF;
     double m_trans_llMET_min_WBF, m_ll_min_WBF;
@@ -35,9 +36,10 @@ namespace Rivet {
 
     /// Default constructor
     WWbb() : Analysis("WWbb"),
-	     lepton_etamax(2.4), lepton_ptmin(25.*GeV),
-	     jet_etamax(4.5), jet_ptmin(25.*GeV),
-       lepton_jet_isolation_dR(0.4)
+    lepton_etamax(2.4), lepton_ptmin(25.*GeV),
+    jet_etamax(4.5), jet_ptmin(25.*GeV),
+    lepton_jet_isolation_dR(0.4),
+    lepton_iso_dR(0.4), lepton_iso_frac(0.1)
     {}
 
 
@@ -94,7 +96,6 @@ namespace Rivet {
       // JETS
       ////////////////////////////////////////////////////////
 
-      VetoedFinalState jetinput;
       // jetinput.addVetoOnThisFinalState(muon_bare);
       jetinput.addVetoOnThisFinalState(neutrinos);
 
@@ -156,12 +157,17 @@ namespace Rivet {
       ////////////////////////////////////////////////////////
       vector<DressedLepton> muon_isolated, electron_isolated;
       foreach (DressedLepton& l1, muon_dummy) {
-        muon_isolated.push_back(l1);//keep e with highest pT
+        // double ptcone=0;
+        // foreach (Particle& jet, jetpro) { // Is this the way to loop on the particles in the jet input? using the jetinput because the neutrino are already excluded. 
+          // double deltaRlpart = deltaR(l1.momentum(), jet.momentum(), RAPIDITY);
+          // if (deltaRlpart<lepton_iso_dR) ptcone=ptcone+jet.momentum().pT();
+        // }
+        // if (ptcone<(1.+lepton_iso_frac)*l1.pT()) 
+          muon_isolated.push_back(l1);//keep e with highest pT
       }
       foreach (DressedLepton& l1, electron_dummy) {
         electron_isolated.push_back(l1);//keep e with highest pT
       }
-
       
       /////////////////////////////////////////////////////////////////////////
       // JETS
@@ -250,7 +256,7 @@ namespace Rivet {
 
       // veto if tag jets are central (i.e. tagged) bjets
       // if (bjets_central.find(alljets[0])!=bjet_central.end() ||
-          // bjets_central.find(alljets[1])!=bjet_central.end()) return
+      // bjets_central.find(alljets[1])!=bjet_central.end()) return
       // cuts_WBF->fill(4,weight);
       
     }
