@@ -5,10 +5,11 @@ double bjets_central_min_hh;
 double m_trans_llMET_min_hh, m_trans_llMET_max_hh;
 
 void initialiseHistos_hh() {
-  Histo1DPtr cuts_hh, njets_nbjets_before_hh, njets_nbjets_after_hh;
-  cuts_hh     = bookHisto1D(8,-0.5,7.5);
-  njets_nbjets_before_hh     = bookHisto1D(10,-0.5,9.5, 10,-0.5,9.5);
-  njets_nbjets_after_hh     = bookHisto1D(10,-0.5,9.5, 10,-0.5,9.5);
+  Histo1DPtr cuts_hh; 
+  Histo2DPtr njets_nbjets_before_hh, njets_nbjets_after_hh;
+  cuts_hh     = bookHisto1D("cuts_hh", 8,-0.5,7.5);
+  njets_nbjets_before_hh     = bookHisto2D("njets_nbjets_before_hh",10,-0.5,9.5, 10,-0.5,9.5);
+  njets_nbjets_after_hh     = bookHisto2D("njets_nbjets_after_hh",10,-0.5,9.5, 10,-0.5,9.5);      
 }
 
 void analyse_hh(const Event& event) {
