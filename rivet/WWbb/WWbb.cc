@@ -46,12 +46,12 @@ namespace Rivet {
     Histo1DPtr h_mass_bl_m, h_mass_bl_p;
     Histo1DPtr h_massZoom_bl_m, h_massZoom_bl_p;
 
-    Histo1DPtr njets_after_presel, nbjets_central_after_presel, nbjets_forward_after_presel;
+    Histo1DPtr presel_njets_after, presel_nbjets_central_after, presel_nbjets_forward_after;
 
-    Histo1DPtr cuts_presel;
-    Histo1DPtr cuts_WBF, njets_before_WBF, njets_after_WBF;
-    Histo1DPtr cuts_hh, njets_before_hh, njets_after_hh;
-    Histo2DPtr njets_nbjets_before_hh, njets_nbjets_after_hh;
+    Histo1DPtr presel_cuts;
+    Histo1DPtr WBF_cuts, WBF_njets_before, WBF_njets_after;
+    Histo1DPtr hh_cuts, hh_njets_before, hh_njets_after;
+    Histo2DPtr hh_njets_nbjets_before, hh_njets_nbjets_after;
 
   public:
 
@@ -150,7 +150,7 @@ namespace Rivet {
     // initialize_Histos
     ////////////////////////////////////////////////////////
     void initialize_Histos(){
-      cuts_presel     = bookHisto1D("cuts_presel",20,-0.5,19.5);
+      presel_cuts     = bookHisto1D("presel_cuts",20,-0.5,19.5);
 
       h_mass_Wm = bookHisto1D("h_mass_Wm",24,0,120*GeV);
       h_mass_Wp = bookHisto1D("h_mass_Wp",24,0,120*GeV);
@@ -167,9 +167,9 @@ namespace Rivet {
       h_massZoom_bl_m = bookHisto1D("h_massZoom_bl_m",30,60*GeV,190*GeV);
       h_massZoom_bl_p = bookHisto1D("h_massZoom_bl_p",30,60*GeV,190*GeV);
 
-      njets_after_presel = bookHisto1D("njets_after_presel",10,-0.5,9.5);
-      nbjets_central_after_presel = bookHisto1D("nbjets_central_after_presel",10,-0.5,9.5);
-      nbjets_forward_after_presel = bookHisto1D("nbjets_forward_after_presel",10,-0.5,9.5);
+      presel_njets_after = bookHisto1D("presel_njets_after",10,-0.5,9.5);
+      presel_nbjets_central_after = bookHisto1D("presel_nbjets_central_after",10,-0.5,9.5);
+      presel_nbjets_forward_after = bookHisto1D("presel_nbjets_forward_after",10,-0.5,9.5);
 
 
       // put global stuff here
@@ -186,9 +186,9 @@ namespace Rivet {
     /// Do the analysis
     void analyze(const Event& event) {
       const double weight = event.weight();
-      cuts_presel->fill(0,weight);
-      cuts_WBF->fill(0,weight);
-      cuts_hh->fill(0,weight);
+      presel_cuts->fill(0,weight);
+      WBF_cuts->fill(0,weight);
+      hh_cuts->fill(0,weight);
 
       alljets.clear();
       lightjets.clear();
@@ -230,8 +230,8 @@ namespace Rivet {
 
       //cout << " ------------------------------------" << endl;
       //cout << " n_e = " << electron_dummy.size() << "    n_mu=  " << muon_dummy.size() << endl;
-      if ((electron_dummy.size()==1 && muon_dummy.size()==1) /*&& (electron_dummy[0].charge()*muon_dummy[0].charge()==-1)*/) cuts_presel->fill(1,weight);
-      if ((electron_dummy.size()==1 && muon_dummy.size()==1) && (electron_dummy[0].charge()*muon_dummy[0].charge()==-1)) cuts_presel->fill(2,weight);
+      if ((electron_dummy.size()==1 && muon_dummy.size()==1) /*&& (electron_dummy[0].charge()*muon_dummy[0].charge()==-1)*/) presel_cuts->fill(1,weight);
+      if ((electron_dummy.size()==1 && muon_dummy.size()==1) && (electron_dummy[0].charge()*muon_dummy[0].charge()==-1)) presel_cuts->fill(2,weight);
 
 
 
@@ -341,17 +341,17 @@ namespace Rivet {
       //cout <<"  n_e =  "<< electron_isolated.size() << "    n_mu=  " << muon_isolated.size() << endl;
 
       if (electron_isolated.size()!=1 || muon_isolated.size()!=1) return;
-      cuts_presel->fill(3,weight);
+      presel_cuts->fill(3,weight);
       if (electron_isolated[0].charge()*muon_isolated[0].charge()!=-1) return;
-      cuts_presel->fill(4,weight);
+      presel_cuts->fill(4,weight);
 
       if (electron_isolated[0].charge()>0){
-        cuts_presel->fill(5,weight);
+        presel_cuts->fill(5,weight);
         lepton_m = muon_isolated[0];
         lepton_p = electron_isolated[0];
       }
       else{
-        cuts_presel->fill(6,weight);
+        presel_cuts->fill(6,weight);
         lepton_p = muon_isolated[0];
         lepton_m = electron_isolated[0];
       }
@@ -375,14 +375,14 @@ namespace Rivet {
         }
       }
 
-      for (int ibjet=0; ibjet<bjets_central.size();ibjet++){
+      for (unsigned int ibjet=0; ibjet<bjets_central.size();ibjet++){
         if (BHadrons[bjets_central_index[ibjet]].charge()>0) {
           bjet_m.push_back(bjets_central[ibjet]);
           break;
         }
       }
 
-      for (int ibjet=0; ibjet<bjets_central.size();ibjet++){
+      for (unsigned int ibjet=0; ibjet<bjets_central.size();ibjet++){
         if (BHadrons[bjets_central_index[ibjet]].charge()<0) {
           bjet_p.push_back(bjets_central[ibjet]);
           break;
@@ -401,10 +401,10 @@ namespace Rivet {
       m_bl_p=0;
 
       if(nu_m.size()>0) {
-        cuts_presel->fill(7,weight);
+        presel_cuts->fill(7,weight);
         m_Wm = (lepton_m.momentum() + nu_m[0].momentum()).mass();
         if(bjet_m.size()>0 && bjets_central.size()>1){
-          cuts_presel->fill(9,weight);
+          presel_cuts->fill(9,weight);
           m_tm = (lepton_m.momentum() + bjet_m[0].momentum() + nu_m[0].momentum()).mass();
           m_bl_m = (lepton_m.momentum() + bjet_m[0].momentum()).mass();
 
@@ -418,10 +418,10 @@ namespace Rivet {
       }
 
       if(nu_p.size()>0) {
-        cuts_presel->fill(8,weight);
+        presel_cuts->fill(8,weight);
         m_Wp = (lepton_p.momentum() + nu_p[0].momentum()).mass();
         if(bjet_p.size()>0 && bjets_central.size()>1){
-          cuts_presel->fill(10,weight);
+          presel_cuts->fill(10,weight);
           m_tp = (lepton_p.momentum() + bjet_p[0].momentum() + nu_p[0].momentum()).mass();
           m_bl_p = (lepton_p.momentum() + bjet_p[0].momentum()).mass();
 
@@ -434,16 +434,16 @@ namespace Rivet {
         h_massZoom_Wp->fill(m_Wp,weight);
       }
 
-      njets_after_presel->fill(alljets.size(),weight);
-      nbjets_central_after_presel->fill(bjets_central.size(),weight);
-      nbjets_forward_after_presel->fill(bjets_forward.size(),weight);
+      presel_njets_after->fill(alljets.size(),weight);
+      presel_nbjets_central_after->fill(bjets_central.size(),weight);
+      presel_nbjets_forward_after->fill(bjets_forward.size(),weight);
 
 
       ////////////////////////////////////////////////////////
       // RUN ANALYSES
       ////////////////////////////////////////////////////////
-      cuts_WBF->fill(1,weight);
-      cuts_hh->fill(1,weight);
+      WBF_cuts->fill(1,weight);
+      hh_cuts->fill(1,weight);
 
       analyze_WW(event);
       
@@ -473,16 +473,16 @@ namespace Rivet {
     ////////////////////////////////////////////////////////
     void initialize_Histos_WBF(){
       
-      cuts_WBF     = bookHisto1D("cuts_WBF",5,-0.5,4.5);
-      njets_before_WBF = bookHisto1D("njets_before_WBF",10,-0.5,9.5);
-      njets_after_WBF  = bookHisto1D("njets_after_WBF",10,-0.5,9.5);
+      WBF_cuts     = bookHisto1D("WBF_cuts",5,-0.5,4.5);
+      WBF_njets_before = bookHisto1D("WBF_njets_before",10,-0.5,9.5);
+      WBF_njets_after  = bookHisto1D("WBF_njets_after",10,-0.5,9.5);
 
     }
     
     void analyze_WBF(const Event& event){
 
       const double weight = event.weight();
-      njets_before_WBF->fill(alljets.size(),weight);
+      WBF_njets_before->fill(alljets.size(),weight);
 
       // cut on 2 jets in opposite hemispheres with minimal mass and rap distance
       if (alljets.size()<2) return;
@@ -490,21 +490,21 @@ namespace Rivet {
       double y1(alljets[1].momentum().eta());
       double massJJ((alljets[0].momentum()+alljets[1].momentum()).mass());
       if (y0*y1>0. || fabs(y0-y1)<deltayJJ_min_WBF || massJJ<massJJ_min_WBF) return;
-      cuts_WBF->fill(2,weight);
+      WBF_cuts->fill(2,weight);
 
       // cuts on 2 lepton MET system
       if (m_trans_llMET<m_trans_llMET_min_WBF || m_ll<m_ll_min_WBF) return;
       double ptm(lepton_m.momentum().pT()),ptp(lepton_p.momentum().pT());
       double ptlep1(ptm>ptp?ptm:ptp), ptlep2(ptm>ptp?ptp:ptm);
       if (ptlep1<ptlep1_min_WBF || ptlep2<ptlep2_min_WBF || MET<MET_min_WBF) return;
-      cuts_WBF->fill(3,weight);
+      WBF_cuts->fill(3,weight);
       
-      njets_after_WBF->fill(alljets.size(),weight);
+      WBF_njets_after->fill(alljets.size(),weight);
 
       // veto if tag jets are central (i.e. tagged) bjets
       // if (bjets_central.find(alljets[0])!=bjet_central.end() ||
       // bjets_central.find(alljets[1])!=bjet_central.end()) return
-      // cuts_WBF->fill(4,weight);
+      // WBF_cuts->fill(4,weight);
       
     }
 
@@ -512,24 +512,25 @@ namespace Rivet {
     // HH
     ////////////////////////////////////////////////////////
     void initialize_Histos_HH(){
-      cuts_hh     = bookHisto1D("cuts_hh", 20,-0.5,19.5);
-      njets_before_hh = bookHisto1D("njets_before_hh",10,-0.5,9.5);
-      njets_after_hh = bookHisto1D("njets_after_hh",10,-0.5,9.5);
-      njets_nbjets_before_hh     = bookHisto2D("njets_nbjets_before_hh",10,-0.5,9.5, 10,-0.5,9.5);
-      njets_nbjets_after_hh     = bookHisto2D("njets_nbjets_after_hh",10,-0.5,9.5, 10,-0.5,9.5);      
+      hh_cuts     = bookHisto1D("hh_cuts", 20,-0.5,19.5);
+      hh_njets_before = bookHisto1D("hh_njets_before",10,-0.5,9.5);
+      hh_njets_after = bookHisto1D("hh_njets_after",10,-0.5,9.5);
+      hh_njets_nbjets_before     = bookHisto2D("hh_njets_nbjets_before",10,-0.5,9.5, 10,-0.5,9.5);
+      hh_njets_nbjets_after     = bookHisto2D("hh_njets_nbjets_after",10,-0.5,9.5, 10,-0.5,9.5);      
     }
     
     void analyze_HH(const Event& event){
       const double weight = event.weight();
-      njets_before_hh->fill(alljets.size(),weight);
-      njets_nbjets_before_hh->fill(alljets.size(), bjets_central.size());
+      hh_njets_before->fill(alljets.size(),weight);
+      hh_njets_nbjets_before->fill(alljets.size(), bjets_central.size());
 
       // Objects used: MET, lepton_m, lepton_p, alljets, bjets_central, m_ll, m_trans_llMET
 
       // Missing ETrel
       //            *"mismom"   for "delta_phi" >= (0.5*pi)
       //            *"mismom.pT()*sin(delta_phi)"   for "delta_phi" < (0.5*pi)
-      double METrel = 0, delta_phi = 0;
+      double METrel, delta_phi;
+      METrel = 0, delta_phi = 0;
       vector<double> vL_MET_angle, vJet_MET_angle;
       vL_MET_angle.push_back(fabs(deltaPhi(lepton_m.momentum(), MET_4v)));
       vL_MET_angle.push_back(fabs(deltaPhi(lepton_p.momentum(), MET_4v)));
@@ -551,28 +552,28 @@ namespace Rivet {
 
       // Selection
       if(/*METrel*/MET <= METrel_min_hh) return; // METrel_min_hh = 25*GeV
-      cuts_hh->fill(2,weight);
+      hh_cuts->fill(2,weight);
 
       if(m_ll <= mass_ll_min_hh) return; // mass_ll_min_hh = 10*GeV
-      cuts_hh->fill(3,weight);
+      hh_cuts->fill(3,weight);
 
       if(bjets_central.size() < bjets_central_min_hh) return; // bjets_central_min_hh = 2
-      cuts_hh->fill(4,weight);
-      njets_after_hh->fill(alljets.size(),weight);
-      njets_nbjets_after_hh->fill(alljets.size(), bjets_central.size());
+      hh_cuts->fill(4,weight);
+      hh_njets_after->fill(alljets.size(),weight);
+      hh_njets_nbjets_after->fill(alljets.size(), bjets_central.size());
 
       // 2 leading b-jets invariant mass
       double mBB = (bjets_central[0].momentum() + bjets_central[1].momentum()).mass();
       
       if(m_trans_llMET < m_trans_llMET_min_hh || m_trans_llMET > m_trans_llMET_max_hh) return; // m_trans_llMET_min_hh = 100*GeV; m_trans_llMET_max_hh = 150*GeV
-      cuts_hh->fill(5,weight);
+      hh_cuts->fill(5,weight);
 
       if(mBB < mBB_min_hh || mBB > mBB_max_hh) return; // mBB_min_hh = 100*GeV; mBB_max_hh = 150*GeV
-      cuts_hh->fill(6,weight);
+      hh_cuts->fill(6,weight);
 
       if (m_bl_m < m_bl_max_hh && m_bl_m > m_bl_min_hh) return; // m_bl_min_hh = 100*GeV ; m_bl_max_hh = 180*GeV
       if (m_bl_p < m_bl_max_hh && m_bl_p > m_bl_min_hh) return; // m_bl_min_hh = 100*GeV ; m_bl_max_hh = 180*GeV
-      cuts_hh->fill(7,weight);
+      hh_cuts->fill(7,weight);
 
 
       
