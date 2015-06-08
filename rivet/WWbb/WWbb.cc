@@ -49,13 +49,11 @@ namespace Rivet {
     Histo1DPtr h_massZoom_bl_m, h_massZoom_bl_p;
 
     Histo1DPtr presel_njets_after, presel_nbjets_central_after, presel_nbjets_forward_after;
-
     Histo1DPtr presel_cuts;
     Histo1DPtr WBF_cuts, WBF_njets_before, WBF_njets_after;
     Histo1DPtr hh_cuts, hh_njets_before, hh_njets_after;
     Histo2DPtr hh_njets_nbjets_before, hh_njets_nbjets_after;
     Histo1DPtr ww_cuts, ww_njets_before;
-
 
   public:
 
@@ -70,6 +68,7 @@ namespace Rivet {
     m_trans_llMET_min_hh(100*GeV), m_trans_llMET_max_hh(150*GeV), mBB_min_hh(100*GeV), mBB_max_hh(150*GeV),
 	     m_bl_min_hh(100*GeV), m_bl_max_hh(180*GeV),
 	     m_ll_min_ww(10*GeV), MET_min_ww(15*GeV), alljets_max_ww(0)	 
+
     {}
 
 
