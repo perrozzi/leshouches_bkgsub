@@ -41,6 +41,8 @@ namespace Rivet {
     double m_ll_min_ww, MET_min_ww, alljets_max_ww;
 
     Histo1DPtr h_nbhadrons;
+    Histo1DPtr h_pt_Wm, h_pt_Wp;
+    Histo1DPtr h_rapidity_Wm, h_rapidity_Wp;
     Histo1DPtr h_mass_Wm, h_mass_Wp;
     Histo1DPtr h_massZoom_Wm, h_massZoom_Wp;
     Histo1DPtr h_mass_tm, h_mass_tp;
@@ -49,6 +51,8 @@ namespace Rivet {
     Histo1DPtr h_massZoom_bl_m, h_massZoom_bl_p;
 
     Histo1DPtr presel_njets_after, presel_nbjets_central_after, presel_nbjets_forward_after;
+    Histo1DPtr presel_jets_pt_after, presel_bjets_pt_central_after, presel_bjets_pt_forward_after;
+    Histo1DPtr presel_jets_eta_after, presel_bjets_eta_central_after, presel_bjets_eta_forward_after;
     Histo1DPtr presel_cuts;
     Histo1DPtr WBF_cuts, WBF_njets_before, WBF_njets_after;
     Histo1DPtr hh_cuts, hh_njets_before, hh_njets_after;
@@ -157,6 +161,10 @@ namespace Rivet {
       presel_cuts     = bookHisto1D("presel_cuts",20,-0.5,19.5);
 
       h_nbhadrons = bookHisto1D("h_nbhadrons",10,0,10);
+      h_pt_Wm = bookHisto1D("h_pt_Wm",50,-5,5);
+      h_pt_Wp = bookHisto1D("h_pt_Wp",50,-5,5);
+      h_rapidity_Wm = bookHisto1D("h_rapidity_Wm",50,-5,5);
+      h_rapidity_Wp = bookHisto1D("h_rapidity_Wp",50,-5,5);
       h_mass_Wm = bookHisto1D("h_mass_Wm",24,0,120*GeV);
       h_mass_Wp = bookHisto1D("h_mass_Wp",24,0,120*GeV);
       h_massZoom_Wm = bookHisto1D("h_massZoom_Wm",40,60*GeV,100*GeV);
@@ -175,6 +183,12 @@ namespace Rivet {
       presel_njets_after = bookHisto1D("presel_njets_after",10,-0.5,9.5);
       presel_nbjets_central_after = bookHisto1D("presel_nbjets_central_after",10,-0.5,9.5);
       presel_nbjets_forward_after = bookHisto1D("presel_nbjets_forward_after",10,-0.5,9.5);
+      presel_jets_pt_after = bookHisto1D("presel_jets_pt_after",100,0,100);
+      presel_bjets_pt_central_after = bookHisto1D("presel_bjets_pt_central_after",100,0,100);
+      presel_bjets_pt_forward_after = bookHisto1D("presel_bjets_pt_forward_after",100,0,100);
+      presel_jets_eta_after = bookHisto1D("presel_jets_eta_after",50,-5,5);
+      presel_bjets_eta_central_after = bookHisto1D("presel_bjets_eta_central_after",50,-5,5);
+      presel_bjets_eta_forward_after = bookHisto1D("presel_bjets_eta_forward_after",50,-5,5);
 
 
       // put global stuff here
@@ -422,6 +436,8 @@ namespace Rivet {
           h_mass_tm->fill(m_tm,weight);
           h_massZoom_tm->fill(m_tm,weight);
         }
+        h_pt_Wm->fill((lepton_m.momentum() + nu_m[0].momentum()).pt(),weight);
+        h_rapidity_Wm->fill((lepton_m.momentum() + nu_m[0].momentum()).rapidity(),weight);
         h_mass_Wm->fill(m_Wm,weight);
         h_massZoom_Wm->fill(m_Wm,weight);
       }
@@ -439,6 +455,8 @@ namespace Rivet {
           h_mass_tp->fill(m_tp,weight);
           h_massZoom_tp->fill(m_tp,weight);
         }
+        h_pt_Wp->fill((lepton_p.momentum() + nu_p[0].momentum()).pt(),weight);
+        h_rapidity_Wp->fill((lepton_p.momentum() + nu_p[0].momentum()).rapidity(),weight);
         h_mass_Wp->fill(m_Wp,weight);
         h_massZoom_Wp->fill(m_Wp,weight);
       }
@@ -446,7 +464,19 @@ namespace Rivet {
       presel_njets_after->fill(alljets.size(),weight);
       presel_nbjets_central_after->fill(bjets_central.size(),weight);
       presel_nbjets_forward_after->fill(bjets_forward.size(),weight);
-
+      
+      if(alljets.size()>0){
+        presel_jets_pt_after->fill(alljets[0].pt(),weight);
+        presel_jets_eta_after->fill(alljets[0].eta(),weight);
+      }
+      if(bjets_central.size()>0){
+        presel_bjets_pt_central_after->fill(bjets_central[0].pt(),weight);
+        presel_bjets_eta_central_after->fill(bjets_central[0].eta(),weight);
+      }
+      if(bjets_forward.size()>0){
+        presel_bjets_pt_forward_after->fill(bjets_forward[0].pt(),weight);
+        presel_bjets_eta_forward_after->fill(bjets_forward[0].eta(),weight);
+      }
 
       ////////////////////////////////////////////////////////
       // RUN ANALYSES
@@ -620,6 +650,10 @@ namespace Rivet {
       
       // cout << "crossSection()/picobarn/sumOfWeights()= " << crossSection() << " " << picobarn << " " << sumOfWeights() << endl;
       scale(h_nbhadrons, crossSection()/picobarn/sumOfWeights());
+      scale(h_pt_Wm, crossSection()/picobarn/sumOfWeights());
+      scale(h_pt_Wp, crossSection()/picobarn/sumOfWeights());
+      scale(h_rapidity_Wm, crossSection()/picobarn/sumOfWeights());
+      scale(h_rapidity_Wp, crossSection()/picobarn/sumOfWeights());
       scale(h_mass_Wm, crossSection()/picobarn/sumOfWeights());
       scale(h_mass_Wp, crossSection()/picobarn/sumOfWeights());
       scale(h_massZoom_Wm, crossSection()/picobarn/sumOfWeights());
@@ -635,6 +669,12 @@ namespace Rivet {
       scale(presel_njets_after, crossSection()/picobarn/sumOfWeights());
       scale(presel_nbjets_central_after, crossSection()/picobarn/sumOfWeights());
       scale(presel_nbjets_forward_after, crossSection()/picobarn/sumOfWeights());
+      scale(presel_jets_pt_after, crossSection()/picobarn/sumOfWeights());
+      scale(presel_bjets_pt_central_after, crossSection()/picobarn/sumOfWeights());
+      scale(presel_bjets_pt_forward_after, crossSection()/picobarn/sumOfWeights());
+      scale(presel_jets_eta_after, crossSection()/picobarn/sumOfWeights());
+      scale(presel_bjets_eta_central_after, crossSection()/picobarn/sumOfWeights());
+      scale(presel_bjets_eta_forward_after, crossSection()/picobarn/sumOfWeights());
       scale(WBF_njets_before, crossSection()/picobarn/sumOfWeights());
       scale(WBF_njets_after, crossSection()/picobarn/sumOfWeights());
       scale(hh_njets_before, crossSection()/picobarn/sumOfWeights());
