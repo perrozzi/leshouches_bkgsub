@@ -38,6 +38,8 @@ namespace Rivet {
     double METrel_min_hh, mass_ll_min_hh, bjets_central_min_hh, m_trans_llMET_min_hh, m_trans_llMET_max_hh, mBB_min_hh, mBB_max_hh;
     double m_bl_min_hh,m_bl_max_hh;
 
+    double m_ll_min_ww, MET_min_ww, alljets_max_ww;
+
     Histo1DPtr h_nbhadrons;
     Histo1DPtr h_mass_Wm, h_mass_Wp;
     Histo1DPtr h_massZoom_Wm, h_massZoom_Wp;
@@ -47,11 +49,11 @@ namespace Rivet {
     Histo1DPtr h_massZoom_bl_m, h_massZoom_bl_p;
 
     Histo1DPtr presel_njets_after, presel_nbjets_central_after, presel_nbjets_forward_after;
-
     Histo1DPtr presel_cuts;
     Histo1DPtr WBF_cuts, WBF_njets_before, WBF_njets_after;
     Histo1DPtr hh_cuts, hh_njets_before, hh_njets_after;
     Histo2DPtr hh_njets_nbjets_before, hh_njets_nbjets_after;
+    Histo1DPtr ww_cuts, ww_njets_before;
 
   public:
 
@@ -64,7 +66,9 @@ namespace Rivet {
     bhad_ptmin(5.*GeV), 
     METrel_min_hh(25*GeV), mass_ll_min_hh(10*GeV), bjets_central_min_hh(2),
     m_trans_llMET_min_hh(100*GeV), m_trans_llMET_max_hh(150*GeV), mBB_min_hh(100*GeV), mBB_max_hh(150*GeV),
-    m_bl_min_hh(100*GeV), m_bl_max_hh(180*GeV)    
+    m_bl_min_hh(100*GeV), m_bl_max_hh(180*GeV),
+    m_ll_min_ww(10*GeV), MET_min_ww(15*GeV), alljets_max_ww(0)	 
+
     {}
 
 
@@ -186,11 +190,12 @@ namespace Rivet {
 
     /// Do the analysis
     void analyze(const Event& event) {
-            
+      
       const double weight = event.weight();
       presel_cuts->fill(0,weight);
       WBF_cuts->fill(0,weight);
       hh_cuts->fill(0,weight);
+      ww_cuts->fill(0,weight);
 
       alljets.clear();
       lightjets.clear();
@@ -448,6 +453,7 @@ namespace Rivet {
       ////////////////////////////////////////////////////////
       WBF_cuts->fill(1,weight);
       hh_cuts->fill(1,weight);
+      ww_cuts->fill(1,weight);
 
       analyze_WW(event);
       
@@ -465,11 +471,26 @@ namespace Rivet {
     // WW
     ////////////////////////////////////////////////////////
     void initialize_Histos_WW(){
-      
+      ww_cuts     = bookHisto1D("ww_cuts", 20,-0.5,19.5);
+      ww_njets_before = bookHisto1D("ww_njets_before",10,-0.5,9.5);     
     }
     
     void analyze_WW(const Event& event){
+      const double weight = event.weight();
+      ww_njets_before->fill(alljets.size(),weight);     
+      ww_cuts->fill(2,weight);
+
+      if(m_ll < m_ll_min_ww) return; // m_ll_min_ww(10*GeV)
+      ww_cuts->fill(3,weight);
       
+      if(MET < MET_min_ww) return; // MET_min_ww(15*GeV)
+      ww_cuts->fill(4,weight);
+
+      if(alljets.size() > alljets_max_ww) return; // alljets_max_ww(0)
+      ww_cuts->fill(5,weight);
+
+      // no MPT cut
+      // no dPhi(MET,MPT) cut           
     }
 
     ////////////////////////////////////////////////////////
