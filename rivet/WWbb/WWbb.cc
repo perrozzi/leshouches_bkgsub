@@ -30,7 +30,6 @@ namespace Rivet {
     Jets bjet_p, bjet_m;
 
 
-
     double massJJ_min_WBF, deltayJJ_min_WBF;
     double m_trans_llMET_min_WBF, m_ll_min_WBF;
     double ptlep1_min_WBF,ptlep2_min_WBF,MET_min_WBF;
@@ -39,6 +38,7 @@ namespace Rivet {
     double METrel_min_hh, mass_ll_min_hh, bjets_central_min_hh, m_trans_llMET_min_hh, m_trans_llMET_max_hh, mBB_min_hh, mBB_max_hh;
     double m_bl_min_hh,m_bl_max_hh;
 
+    Histo1DPtr h_nbhadrons;
     Histo1DPtr h_mass_Wm, h_mass_Wp;
     Histo1DPtr h_massZoom_Wm, h_massZoom_Wp;
     Histo1DPtr h_mass_tm, h_mass_tp;
@@ -152,6 +152,7 @@ namespace Rivet {
     void initialize_Histos(){
       presel_cuts     = bookHisto1D("presel_cuts",20,-0.5,19.5);
 
+      h_nbhadrons = bookHisto1D("h_nbhadrons",10,0,10);
       h_mass_Wm = bookHisto1D("h_mass_Wm",24,0,120*GeV);
       h_mass_Wp = bookHisto1D("h_mass_Wp",24,0,120*GeV);
       h_massZoom_Wm = bookHisto1D("h_massZoom_Wm",40,60*GeV,100*GeV);
@@ -185,6 +186,7 @@ namespace Rivet {
 
     /// Do the analysis
     void analyze(const Event& event) {
+            
       const double weight = event.weight();
       presel_cuts->fill(0,weight);
       WBF_cuts->fill(0,weight);
@@ -306,6 +308,7 @@ namespace Rivet {
         }
         else continue;
       }
+      h_nbhadrons->fill(BHadrons.size(),weight);
       //cout << BHadrons.size()<<endl;
 
       /////////////////////////////////////////////////////////////////////////
@@ -358,6 +361,7 @@ namespace Rivet {
 
       m_ll = (lepton_m.momentum() + lepton_p.momentum()).mass();
       FourMomentum METll_4v = lepton_m.momentum() + lepton_p.momentum() + MET_4v;
+      // CHECK THAT LONGITUDINAL MOMENTUM IS REMOVED
       m_trans_llMET = sqrt(METll_4v.Et2() - METll_4v.pT2());
 
 
@@ -367,7 +371,7 @@ namespace Rivet {
           nu_p.push_back(inu); //W+;
           break;
         }
-      }      
+      }
       foreach (const Particle& inu, Neutrinos){
         if (inu.pid()+lepton_m.pid()==-1) {
           nu_m.push_back(inu); //W-;
@@ -592,6 +596,35 @@ namespace Rivet {
 
     /// Finalize
     void finalize() {
+      
+      // cout << "crossSection()/picobarn/sumOfWeights()= " << crossSection() << " " << picobarn << " " << sumOfWeights() << endl;
+      scale(h_nbhadrons, crossSection()/picobarn/sumOfWeights());
+      scale(h_mass_Wm, crossSection()/picobarn/sumOfWeights());
+      scale(h_mass_Wp, crossSection()/picobarn/sumOfWeights());
+      scale(h_massZoom_Wm, crossSection()/picobarn/sumOfWeights());
+      scale(h_massZoom_Wp, crossSection()/picobarn/sumOfWeights());
+      scale(h_mass_tm, crossSection()/picobarn/sumOfWeights());
+      scale(h_mass_tp, crossSection()/picobarn/sumOfWeights());
+      scale(h_massZoom_tm, crossSection()/picobarn/sumOfWeights());
+      scale(h_massZoom_tp, crossSection()/picobarn/sumOfWeights());
+      scale(h_mass_bl_m, crossSection()/picobarn/sumOfWeights());
+      scale(h_mass_bl_p, crossSection()/picobarn/sumOfWeights());
+      scale(h_massZoom_bl_m, crossSection()/picobarn/sumOfWeights());
+      scale(h_massZoom_bl_p, crossSection()/picobarn/sumOfWeights());
+      scale(presel_njets_after, crossSection()/picobarn/sumOfWeights());
+      scale(presel_nbjets_central_after, crossSection()/picobarn/sumOfWeights());
+      scale(presel_nbjets_forward_after, crossSection()/picobarn/sumOfWeights());
+      scale(WBF_njets_before, crossSection()/picobarn/sumOfWeights());
+      scale(WBF_njets_after, crossSection()/picobarn/sumOfWeights());
+      scale(hh_njets_before, crossSection()/picobarn/sumOfWeights());
+      scale(hh_njets_after, crossSection()/picobarn/sumOfWeights());
+      // scale(hh_njets_nbjets_before, crossSection()/picobarn/sumOfWeights());
+      // scale(hh_njets_nbjets_after, crossSection()/picobarn/sumOfWeights());
+      
+      scale(presel_cuts, crossSection()/picobarn/sumOfWeights());
+      scale(WBF_cuts, crossSection()/picobarn/sumOfWeights());
+      scale(hh_cuts, crossSection()/picobarn/sumOfWeights());
+      
     }
 
 
