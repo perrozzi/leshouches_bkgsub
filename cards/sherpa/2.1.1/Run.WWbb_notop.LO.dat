@@ -34,7 +34,7 @@
 
 (processes){
   Process : 93 93 ->  24 -24 5 -5 93{NJET}
-  Order (*,2); 
+  Order_EW 2;
   CKKW sqr(QCUT/E_CMS);
   Integration_Error 0.05;
   End process
