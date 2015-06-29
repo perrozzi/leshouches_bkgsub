@@ -1,6 +1,6 @@
 (run){
   % general setting
-  EVENTS 10K; ERROR 0.99;
+  EVENTS 500K; ERROR 0.99;
   MI_HANDLER None
   EVENT_OUTPUT=HepMC_GenEvent[HepMC.WWbb_notop.LO]
 

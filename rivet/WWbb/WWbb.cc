@@ -161,22 +161,22 @@ namespace Rivet {
       presel_cuts     = bookHisto1D("presel_cuts",20,-0.5,19.5);
 
       h_nbhadrons = bookHisto1D("h_nbhadrons",10,0,10);
-      h_pt_Wm = bookHisto1D("h_pt_Wm",50,-5,5);
-      h_pt_Wp = bookHisto1D("h_pt_Wp",50,-5,5);
+      h_pt_Wm = bookHisto1D("h_pt_Wm",100,0*GeV,100*GeV);
+      h_pt_Wp = bookHisto1D("h_pt_Wp",100,0*GeV,100*GeV);
       h_rapidity_Wm = bookHisto1D("h_rapidity_Wm",50,-5,5);
       h_rapidity_Wp = bookHisto1D("h_rapidity_Wp",50,-5,5);
-      h_mass_Wm = bookHisto1D("h_mass_Wm",24,0,120*GeV);
-      h_mass_Wp = bookHisto1D("h_mass_Wp",24,0,120*GeV);
+      h_mass_Wm = bookHisto1D("h_mass_Wm",24,0*GeV,120*GeV);
+      h_mass_Wp = bookHisto1D("h_mass_Wp",24,0*GeV,120*GeV);
       h_massZoom_Wm = bookHisto1D("h_massZoom_Wm",40,60*GeV,100*GeV);
       h_massZoom_Wp = bookHisto1D("h_massZoom_Wp",40,60*GeV,100*GeV);
 
-      h_mass_tm = bookHisto1D("h_mass_tm",40,0,200*GeV);
-      h_mass_tp = bookHisto1D("h_mass_tp",40,0,200*GeV);
+      h_mass_tm = bookHisto1D("h_mass_tm",40,0*GeV,200*GeV);
+      h_mass_tp = bookHisto1D("h_mass_tp",40,0*GeV,200*GeV);
       h_massZoom_tm = bookHisto1D("h_massZoom_tm",40,150*GeV,190*GeV);
       h_massZoom_tp = bookHisto1D("h_massZoom_tp",40,150*GeV,190*GeV);
 
-      h_mass_bl_m = bookHisto1D("h_mass_bl_m",40,0,200*GeV);
-      h_mass_bl_p = bookHisto1D("h_mass_bl_p",40,0,200*GeV);
+      h_mass_bl_m = bookHisto1D("h_mass_bl_m",40,0*GeV,200*GeV);
+      h_mass_bl_p = bookHisto1D("h_mass_bl_p",40,0*GeV,200*GeV);
       h_massZoom_bl_m = bookHisto1D("h_massZoom_bl_m",30,60*GeV,190*GeV);
       h_massZoom_bl_p = bookHisto1D("h_massZoom_bl_p",30,60*GeV,190*GeV);
 
@@ -184,8 +184,8 @@ namespace Rivet {
       presel_nbjets_central_after = bookHisto1D("presel_nbjets_central_after",10,-0.5,9.5);
       presel_nbjets_forward_after = bookHisto1D("presel_nbjets_forward_after",10,-0.5,9.5);
       presel_jets_pt_after = bookHisto1D("presel_jets_pt_after",100,0,100);
-      presel_bjets_pt_central_after = bookHisto1D("presel_bjets_pt_central_after",100,0,100);
-      presel_bjets_pt_forward_after = bookHisto1D("presel_bjets_pt_forward_after",100,0,100);
+      presel_bjets_pt_central_after = bookHisto1D("presel_bjets_pt_central_after",100,0*GeV,100*GeV);
+      presel_bjets_pt_forward_after = bookHisto1D("presel_bjets_pt_forward_after",100,0*GeV,100*GeV);
       presel_jets_eta_after = bookHisto1D("presel_jets_eta_after",50,-5,5);
       presel_bjets_eta_central_after = bookHisto1D("presel_bjets_eta_central_after",50,-5,5);
       presel_bjets_eta_forward_after = bookHisto1D("presel_bjets_eta_forward_after",50,-5,5);
