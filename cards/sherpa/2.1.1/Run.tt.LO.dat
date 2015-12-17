@@ -21,8 +21,8 @@
   LOOPGEN:=OpenLoops;
 
   % collider setup
-  BEAM_1 2212; BEAM_ENERGY_1 = 7000.;
-  BEAM_2 2212; BEAM_ENERGY_2 = 7000.;
+  BEAM_1 2212; BEAM_ENERGY_1 = 6500.;
+  BEAM_2 2212; BEAM_ENERGY_2 = 6500.;
 
   % decays
   HARD_DECAYS On;
@@ -38,7 +38,7 @@
 
 (processes){
   Process : 93 93 ->  6 -6 93{NJET}
-  Order_EW 2;
+  Order_EW 0;
   CKKW sqr(QCUT/E_CMS);
   NLO_QCD_Mode MC@NLO {LJET};
   ME_Generator Amegic {LJET};

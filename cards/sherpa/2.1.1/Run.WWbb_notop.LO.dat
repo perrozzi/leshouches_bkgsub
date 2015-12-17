@@ -1,4 +1,4 @@
-(run){
+ (run){
   % general setting
   EVENTS 500K; ERROR 0.99;
   MI_HANDLER None
@@ -17,8 +17,8 @@
   RESULT_DIRECTORY = Results.WWbb_notop.LO
 
   % collider setup
-  BEAM_1 2212; BEAM_ENERGY_1 = 7000.;
-  BEAM_2 2212; BEAM_ENERGY_2 = 7000.;
+  BEAM_1 2212; BEAM_ENERGY_1 = 6500.;
+  BEAM_2 2212; BEAM_ENERGY_2 = 6500.;
 
   % decays
   ACTIVE[5]=1; MASSIVE[5]=1; MASS[5]=4.6
