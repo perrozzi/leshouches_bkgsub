@@ -29,7 +29,8 @@
 
 \title{Irreducible backgrounds and measurement uncertainties}
 
-\author{Jonathan M. Butterworth$^1$, Vitaliano Ciulli, Paolo Francavilla,\\ Frank Krauss$^2$, Carlo Pandini, Luca Parrozzi \\
+\author{Jonathan M. Butterworth$^1$, Vitaliano Ciulli, Paolo Francavilla,\\ Vasilis Konstantinides$^1$, Frank Krauss$^2$, Carlo Pandini,\\
+Luca Parrozzi, Umit Utku$^1$, Ben Waugh$^1$ \\
 \it $^1$Department of Physics and Astronomy, University College London,\\ 
 \it $^2$IPPP, Department of Physics, Durham University}
 
@@ -73,8 +74,8 @@ An example of a final state in which two contributions are often treated as dist
 decaying $W$ boson (that is, charged lepton plus missing transverse energy) in association with a $b$-tagged hadronic jet. 
 The publication of the ATLAS analysis of 7~TeV collision data\cite{Aad:2013vka} contains a measurement of the fiducial $W+b$ 
 cross section both with and without the subtraction of the single-top contribution to the identical final state. Both
-versions are available in HEPDATA~\cite{} and Rivet~\cite{Buckley:2010ar}. The unsubtracted version is show in Fig.~\ref{fig:wb}, 
-and the subtracted version in Fig.~\ref{fig:notop}. 
+versions are available in HEPDATA~\cite{} and Rivet~\cite{Buckley:2010ar}\footnote{The Rivet analysis was modified to add the histograms for the unsubtracted data.}. 
+The unsubtracted version is show in Fig.~\ref{fig:wb}, and the subtracted version in Fig.~\ref{fig:notop}. 
 
 \begin{figure}%[htbp!]
 \centering
@@ -85,8 +86,12 @@ and the subtracted version in Fig.~\ref{fig:notop}.
 	\includegraphics[width=0.48\textwidth]{fig_09b.pdf}
 }
 \caption{\label{fig:wb}
-Measured differential $W+b$-jets cross-section without single-top subtraction as a function of the transverse momentum of the $b$-jet, in the case where the $b$-jet is the only jet in the fiducial region (a) or when there is an additional jet (b). The cross sections are obtained by combining the electron and muon channels. The measurements are compared to the sum of seperate $W+b$-jets and single-top predictions 
-%obtained using ALPGEN interfaced to HERWIG and JIMMY and scaled by a NNLO inclusive $W$ normalization factor, and ACERMC interfaced to PYTHIA and scaled to a NLO single-top cross-section. 
+Measured differential $W+b$-jets cross-section without single-top subtraction as a function of the transverse momentum of the $b$-jet, in the 
+case where the $b$-jet is the only jet in the fiducial region (a) or when there is an additional jet (b). 
+%The cross sections are obtained by combining the electron and muon channels. 
+The measurements are compared to the sum of seperate $W+b$-jets and single-top predictions 
+obtained using ALPGEN interfaced to HERWIG and JIMMY and scaled by a NNLO inclusive $W$ normalization factor, and ACERMC interfaced to PYTHIA and scaled to a 
+NLO single-top cross-section. 
 The ratios between measured and predicted cross-sections are also shown. From~\protect\cite{Aad:2013vka}.}
 \end{figure}
 
@@ -99,8 +104,9 @@ The ratios between measured and predicted cross-sections are also shown. From~\p
 	\includegraphics[width=0.48\textwidth]{fig_08b.pdf}
 }
 \caption{\label{fig:notop}
-Measured differential $W+b$-jets cross-section after single-top subtraction as a function of the transverse momentum of the $b$-jet, in the case where the $b$-jet is the only jet in the fiducial region (a) or when there is an additional jet (b). The cross sections are obtained by combining the electron and muon channels. The measurements are compared to the a calculation of $W+b$-jet production in the absence of top quark propagators.
-%obtained using ALPGEN interfaced to HERWIG and JIMMY and scaled by a NNLO inclusive $W$ normalization factor, and ACERMC interfaced to PYTHIA and scaled to a NLO single-top cross-section. 
+Measured differential $W+b$-jets cross-section after single-top subtraction as a function of the transverse momentum of the $b$-jet, in the case where the $b$-jet is the only jet in the fiducial region (a) or when there is an additional jet (b). 
+%The cross sections are obtained by combining the electron and muon channels. 
+The measurements are compared to the a calculation of $W+b$-jet production in the absence of top quark propagators obtained using ALPGEN interfaced to HERWIG and JIMMY and scaled by a NNLO inclusive $W$ normalization factor, and ACERMC interfaced to PYTHIA and scaled to a NLO single-top cross-section. 
 The ratios between measured and predicted cross-sections are also shown. From~\protect\cite{Aad:2013vka}.}
 \end{figure}
 
@@ -111,9 +117,9 @@ final state to predict and the theory is likely to be superseded by more sophist
 accurate predictions in future. This strongly mitigates against embedding in a dependency 
 on the theory in the experimental analysis - as is the case if the background is subtracted at detector-level - 
 and is a strong motivation for the unsubtracted version of the measurement.
-\item The contributions from diagrams with and with top are comparable (compare the cross section in the lowest $p_T$ bin, 
+\item The contributions from diagrams with and without top are comparable (compare the cross section in the highest $p_T$ bin, 
 for example).
-\item The uncertainties on the unsubtracted version are smaller.
+\item The data uncertainties on the unsubtracted version are smaller.
 \end{itemize}
 
 Integrated over $p_T$, the unsubstracted fiducial cross section is
@@ -130,15 +136,77 @@ to the systematic errors are
 \end{itemize}
 The fact that jet energy scale dominates masks, to a large extent, the effect of the modelling uncertainties introduced by
 the background subtraction.
-The uncertainty due to the modelling of QCD radiation varies a lot with jet $p_T$. 
-This is exactly the kind of model dependence which one would expect to increaase if a theory-based background
+The uncertainty due to the modelling of QCD radiation varies strongly with jet $p_T$. 
+This is exactly the kind of model dependence which one would expect to increase if a theory-based background
 subtraction is made, and indeed, in the highest $p_T$ bin the systematic uncertainty goes from 16\% before subtraction 
 to 54\% after it (Compare Table~4 with Table~9 of Ref.\cite{Aad:2013vka}.) 
 
-{\bf To be included if UCL students manage to make the plots}
-{\it As the analysis is available in Rivet, it is relatively straightforward to repeat the comparison
-with more modern MC calculations (Herwig++ and Sherpa) and to modify the analysis for 13~TeV collisions.
-See plots, and discuss them.}
+The comparisons were repeated using Sherpa 2.2~\cite{} and Herwig7~\cite{}. The comparison of the non-top diagrams only to the subtracted data is shown in Fig~\ref{fig:subtracted}. 
+With these settings, Herwig gets the normalisation correct, agrees with the data normalisation and with the shape of the 1-jet contribution, but fails to describe the $p_T$ 
+dependence of the 2-jet contribution. Sherpa models the $p_T$ dependence of both contributions well, but overshoots the normalisation of the 1-jet contribution by nearly a 
+factor of 2.
+
+\begin{figure}%[htbp!]
+\centering
+\subfloat{
+	\includegraphics[width=0.48\textwidth]{subtracted_h7_s22-1jet.pdf}
+}
+\subfloat{
+	\includegraphics[width=0.48\textwidth]{subtracted_h7_s22-2jet.pdf}
+}
+\caption{\label{fig:subtracted}
+Measured differential $W+b$-jets cross-section after single-top subtraction as a function of the transverse momentum of the $b$-jet, in the case where the $b$-jet is the only jet in the fiducial region (a) or when there is an additional jet (b). The measurements are compared to the expectations of Sherpa and Herwig, for $Wb$ production processes excluding diagrams containing top quarks.}
+\end{figure}
+
+In Figs~\ref{fig:unsubtracted} the unsubtracted measurement is shown, compared to first Herwig and Sherpa. The contribution from non-top diagrams is shown again, as well as sum
+of this and the single top contributions expected by the generator (Interference terms are neglected). Herwig again gets the normalisation about right, and models the $p_T$ 
+distribution of the 1-jet distribution well, while struggling with this dependences for the 2-jet distribution. Sherpa still overshoots normalisation of the 1-jet contribution 
+(this time by about 65\%), but models the normalisation of the 2-jet contribution, and the $pT$ dependence of both contributions, reasonably well within the data uncertainties.
+
+\begin{figure}%[htbp!]
+\centering
+\subfloat{
+	\includegraphics[width=0.48\textwidth]{unsubtracted-h7-1jet.pdf}
+}
+\subfloat{
+	\includegraphics[width=0.48\textwidth]{unsubtracted-h7-2jet.pdf}
+}
+
+\subfloat{
+	\includegraphics[width=0.48\textwidth]{unsubtracted-s22-1jet.pdf}
+}
+\subfloat{
+	\includegraphics[width=0.48\textwidth]{unsubtracted-s22-2jet.pdf}
+}
+\caption{\label{fig:unsubtracted}
+Measured differential $W+b$-jets cross-section, including single-top contributions, as a function of the transverse momentum of the $b$-jet, 
+in the case where the $b$-jet is the only jet in the fiducial region (a,c) or when there is an additional jet (b,d). 
+The measurements are compared to the Sherpa and Herwig calculations of $W+b$-jet production including resonant top contirbutions, but excluding finite width effects 
+and interference terms between top and non-top diagrams. The contribution from non-top diagrams alone is also shown.}
+\end{figure}
+
+In Fig.~\ref{fig:13tev} we show the MC predictions for 13~TeV collisions. These measurements have yet to be performed, but the main point to be made here is that
+the total top contribution rises from 15\% (32\%) to 23\% (42\%) according to Sherpa (Herwig), which greater effects in some regions. 
+This shows that any problems and uncertainties associated with the
+subtraction of irreducible backgrounds are likely to become more severe at higher energies. The differences between the generators themselves is another indication of the 
+challenges associated with predicting these cross sections, and thus the need to minimise the theory dependence of the measurement.
+  
+\begin{figure}%[htbp!]
+\centering
+\subfloat{
+	\includegraphics[width=0.48\textwidth]{13tev-1jet.pdf}
+}
+\subfloat{
+	\includegraphics[width=0.48\textwidth]{13tev-2jet.pdf}
+}
+\caption{\label{fig:13tev}
+Measured differential $W+b$-jets cross-section, including single-top contributions, as a function of the transverse momentum of the $b$-jet, 
+in the case where the $b$-jet is the only jet in the fiducial region (a,c) or when there is an additional jet (b,d). 
+The measurements are compared to the Sherpa and Herwig calculations of $W+b$-jet production including resonant top contirbutions, but excluding finite width effects 
+and interference terms between top and non-top diagrams. The contributions from non-top diagrams alone are also shown.}
+\end{figure}
+
+
 
 \section{$WWb\bar{b}$ production}
 
