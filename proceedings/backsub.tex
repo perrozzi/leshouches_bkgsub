@@ -13,7 +13,7 @@ $^2$IPPP, Department of Physics, Durham University}
 \maketitle 
 
 \begin{abstract}
-??
+A brief discussion and study of the treatment of irreducible backgrounds in $W+b$-jets and $WWbb$ production is presented.
 \end{abstract}
 
 \section{Introduction}
@@ -30,26 +30,27 @@ phase space.
 
 This represents great progress. One area, however, where the principle of defining a measurement in terms of the final state
 not so widely implemented, is in the consideration of background processes and their subtraction. 
-Often backgrounds are subtracted using a mixture of theoretical and data-drived techniques, 
+Often backgrounds are subtracted using a mixture of theoretical and data-driven techniques, 
 even though in some cases the backgrounds are strictly speaking ``irreducible'', in that they produce final states 
 identical to the ``signal'' final state (even in a perfect detector) and thus should be added to the signal 
 at the amplitude, rather than cross-section, level. These subtractions are also often carried out before, or intermingled with, 
 the unfolding and correction for detector effects such as efficiency and resolution, and thus are impossible to
 undo or redo after the fact. 
 
-In practice, the uncertainty introduced by such subtractions is negligible compared to other uncertainties in the measurements, 
+In practice, the uncertainty introduced by such subtractions is often insignificant compared to other uncertainties in the measurements, 
 for example because the kinematic overlap
 is in fact small and interference terms are negligible. Nevertheless, in some processes, and as precision of both experiment
-and theory increase, such considerations may become important. In this contribute we highlight some such cases in an attempt 
+and theory increase, such considerations can become important. In this contribution we highlight some such cases in an attempt 
 to raise awareness of the issues for future studies. 
 
 \section{Single top and $W+b$ production}
 
-An example of a final state in which two contributions are often treated as distinct processes is the measurement of a leptonic
-decaying $W$ boson (that is, charged lepton plus missing transverse energy) in association with a $b$-tagged hadronic jet. 
+An example of a final state in which two contributions are often treated as distinct processes is the measurement of a 
+leptonically-decaying $W$ boson (that is, charged lepton plus missing transverse energy) in association with a $b$-tagged hadronic jet. 
 The publication of the ATLAS analysis of 7~TeV collision data\cite{Aad:2013vka} contains a measurement of the fiducial $W+b$-jet 
 cross section both with and without the subtraction of the single-top contribution to the identical final state. Both
-versions are available in HEPDATA~\cite{} and Rivet~\cite{Buckley:2010ar}\footnote{The Rivet analysis was modified to add the histograms for the unsubtracted data.}. 
+versions are available in HEPDATA~\cite{hepdata} and Rivet~\cite{Buckley:2010ar}\footnote{The Rivet analysis was modified to add the histograms 
+for the unsubtracted data.}. 
 The unsubtracted version is show in Fig.~\ref{fig:wb}, and the subtracted version in Fig.~\ref{fig:notop}. 
 
 \begin{figure}
@@ -109,7 +110,19 @@ This is exactly the kind of model dependence which one would expect to increase 
 subtraction is made, and indeed, in the highest $p_T$ bin the systematic uncertainty goes from 16\% before subtraction 
 to 54\% after it (Compare Table~4 with Table~9 of Ref.\cite{Aad:2013vka}.) 
 
-The comparisons were repeated using Sherpa 2.2~\cite{} and Herwig7~\cite{}. The comparison of the non-top diagrams only to the subtracted data is shown in Fig~\ref{fig:subtracted}. 
+The comparisons were repeated using Sherpa 2.2~\cite{Gleisberg:2008ta} and Herwig7~\cite{Bellm:2015jjp}. 
+
+For Sherpa, all intermediate particles in the matrix element are kept on-shell and the AMEGIC 
+ME generator for LO calculations was used, with no NLO loop calculations included. Only decays of the $W$ boson to the 
+electron channel are allowed. Multi-parton interactions are switched off. 
+The Sherpa default 5-flavour pdf library (NNPDF~\cite{Ball:2014uwa}) is used. In $Wb$ Production without tops, the $b$-quark is treated as massive with a mass of 4.75~GeV and the $W$-boson is treated as unstable with a width set to 0. The order of the electroweak couplings is fixed to 2. 
+For single top Production, the $b$-quark is is treated as massless in the matrix element calculation but retains its mass settings in the rest of 
+the simulation. QCD and EW order couplings are not fixed. Production includes $s$-channel, $t$-channel and $tW$ single-top channels.
+
+For Heriwg, the built-in matrix elements for $W$+jets and single top were used. All leptonic decays were generated, but the electron only channel
+was selected in Rivet, with a normalisation factor of three applied post-hoc. Production includes $s$-channel, $t$-channel and $tW$ single-top channels. (what PDF?)
+
+The comparison of the non-top diagrams only to the subtracted data is shown in Fig~\ref{fig:subtracted}. 
 With these settings, Herwig gets the normalisation correct, agrees with the data normalisation and with the shape of the 1-jet contribution, but fails to describe the $p_T$ 
 dependence of the 2-jet contribution. Sherpa models the $p_T$ dependence of both contributions well, but overshoots the normalisation of the 1-jet contribution by nearly a 
 factor of 2.
