@@ -113,32 +113,43 @@ to 54\% after it (Compare Table~4 with Table~9 of Ref.\cite{Aad:2013vka}.)
 The comparisons were repeated using Sherpa 2.2~\cite{Gleisberg:2008ta} and Herwig7~\cite{Bellm:2015jjp}. 
 
 For Sherpa, all intermediate particles in the matrix element are kept on-shell and the AMEGIC 
-ME generator for LO calculations was used, with no NLO loop calculations included. Only decays of the $W$ boson to the 
+ME generator for LO calculations~\cite{Krauss:2001iv}. Only decays of the $W$ boson to the 
 electron channel are allowed. Multi-parton interactions are switched off. 
-The Sherpa default 5-flavour pdf library (NNPDF~\cite{Ball:2014uwa}) is used. In $Wb$ Production without tops, the $b$-quark is treated as massive with a mass of 4.75~GeV and the $W$-boson is treated as unstable with a width set to 0. The order of the electroweak couplings is fixed to 2. 
-For single top Production, the $b$-quark is is treated as massless in the matrix element calculation but retains its mass settings in the rest of 
-the simulation. QCD and EW order couplings are not fixed. Production includes $s$-channel, $t$-channel and $tW$ single-top channels.
+The Sherpa default 5-flavour pdf library (NNPDF~\cite{Ball:2014uwa}) is used. In $Wb$ Production
+without tops, the $b$-quark is treated as massive with a mass of 4.75~GeV and the $W$-boson is
+treated through the narrow width approximation. The order of the electroweak couplings is fixed to 2. 
+For single top Production, the $b$-quark is is treated as massless in the matrix element calculation
+but retains its mass settings in the rest of the simulation. QCD and EW order couplings are not
+fixed. Production modes include all channels: $s$-channel, $t$-channel and $tW$ single-top channels.
 
-For Heriwg, the built-in matrix elements for $W$+jets and single top were used. All leptonic decays were generated, but the electron only channel
-was selected in Rivet, with a normalisation factor of three applied post-hoc. Production includes $s$-channel, $t$-channel and $tW$ single-top channels. (what PDF?)
+For Herwig, the built-in matrix elements for $W$+jet and single top were used. All leptonic decays
+were generated, but the electron only channel was selected in Rivet, with a normalisation factor
+of three applied post-hoc. Production includes $s$-channel, $t$-channel and $tW$ single-top channels. (what PDF?)
 
 The comparison of the non-top diagrams only to the subtracted data is shown in Fig~\ref{fig:subtracted}. 
-With these settings, Herwig gets the normalisation correct, agrees with the data normalisation and with the shape of the 1-jet contribution, but fails to describe the $p_T$ 
-dependence of the 2-jet contribution. Sherpa models the $p_T$ dependence of both contributions well, but overshoots the normalisation of the 1-jet contribution by nearly a 
-factor of 2.
+With these settings, Herwig gets the normalisation correct, agrees with the data normalisation and with
+the shape of the 1-($b$)-jet contribution, but fails to describe the $p_T$ dependence of the 2-jet contribution.
+Sherpa models the $p_T$ dependence of both contributions well, but overshoots the normalisation of the 1-jet
+contribution by nearly a factor of 2.
 
 \begin{figure}
 \centering
 	\includegraphics[width=0.48\textwidth]{subtracted_h7_s22-1jet.pdf}
 	\includegraphics[width=0.48\textwidth]{subtracted_h7_s22-2jet.pdf}
 \caption{\label{fig:subtracted}
-Measured differential $W+b$-jets cross-section after single-top subtraction as a function of the transverse momentum of the $b$-jet, in the case where the $b$-jet is the only jet in the fiducial region (a) or when there is an additional jet (b). The measurements are compared to the expectations of Sherpa and Herwig, for $Wb$ production processes excluding diagrams containing top quarks.}
+  Measured differential $W+b$-jets cross-section after single-top subtraction as a function of the
+  transverse momentum of the $b$-jet, in the case where the $b$-jet is the only jet in the fiducial region
+  (a) or when there is an additional jet (b). The measurements are compared to the expectations of
+  Sherpa and Herwig, for $Wb$ production processes excluding diagrams containing top quarks.}
 \end{figure}
 
-In Figs~\ref{fig:unsubtracted} the unsubtracted measurement is shown, compared to first Herwig and Sherpa. The contribution from non-top diagrams is shown again, as well as sum
-of this and the single top contributions expected by the generator (Interference terms are neglected). Herwig again gets the normalisation about right, and models the $p_T$ 
-distribution of the 1-jet distribution well, while struggling with this dependences for the 2-jet distribution. Sherpa still overshoots normalisation of the 1-jet contribution 
-(this time by about 65\%), but models the normalisation of the 2-jet contribution, and the $pT$ dependence of both contributions, reasonably well within the data uncertainties.
+In Figs~\ref{fig:unsubtracted} the unsubtracted measurement is shown, compared to first Herwig and Sherpa.
+The contribution from non-top diagrams is shown again, as well as sum of this and the single top
+contributions expected by the generator (Interference terms are neglected). Herwig again gets the
+normalisation about right, and models the $p_T$ distribution of the 1-jet distribution well, while
+struggling with this dependences for the 2-jet distribution. Sherpa still overshoots normalisation of
+the 1-jet contribution (this time by about 65\%), but models the normalisation of the 2-jet contribution,
+and the $pT$ dependence of both contributions, reasonably well within the data uncertainties.
 
 \begin{figure}
 \centering
@@ -147,52 +158,74 @@ distribution of the 1-jet distribution well, while struggling with this dependen
 	\includegraphics[width=0.48\textwidth]{unsubtracted-s22-1jet.pdf}
 	\includegraphics[width=0.48\textwidth]{unsubtracted-s22-2jet.pdf}
 \caption{\label{fig:unsubtracted}
-Measured differential $W+b$-jets cross-section, including single-top contributions, as a function of the transverse momentum of the $b$-jet, 
-in the case where the $b$-jet is the only jet in the fiducial region (a,c) or when there is an additional jet (b,d). 
-The measurements are compared to the Sherpa and Herwig calculations of $W+b$-jet production including resonant top contributions, but excluding finite width effects 
-and interference terms between top and non-top diagrams. The contribution from non-top diagrams alone is also shown.}
+  Measured differential $W+b$-jets cross-section, including single-top contributions, as a function of the
+  transverse momentum of the $b$-jet, in the case where the $b$-jet is the only jet in the fiducial region
+  (a,c) or when there is an additional jet (b,d).  The measurements are compared to the Sherpa and Herwig
+  calculations of $W+b$-jet production including resonant top contributions, but excluding finite width effects
+  and interference terms between top and non-top diagrams. The contribution from non-top diagrams alone is
+  also shown.}
 \end{figure}
 
-In Fig.~\ref{fig:13tev} we show the MC predictions for 13~TeV collisions. These measurements have yet to be performed, but the main point to be made here is that
-the total top contribution rises from 15\% (32\%) to 23\% (42\%) according to Sherpa (Herwig), which greater effects in some regions. 
-This shows that any problems and uncertainties associated with the
-subtraction of irreducible backgrounds are likely to become more severe at higher energies. The differences between the generators themselves is another indication of the 
-challenges associated with predicting these cross sections, and thus the need to minimise the theory dependence of the measurement.
+In Fig.~\ref{fig:13tev} we show the MC predictions for 13~TeV collisions. These measurements have yet to be
+performed, but the main point to be made here is that the total top contribution rises from 15\% (32\%)
+to 23\% (42\%) according to Sherpa (Herwig), which greater effects in some regions.  This shows that any
+problems and uncertainties associated with the subtraction of irreducible backgrounds are likely to become
+more severe at higher energies. The differences between the generators themselves is another indication of the 
+challenges associated with predicting these cross sections, and thus the need to minimise the theory
+dependence of the measurement.
   
 \begin{figure}
 \centering
 	\includegraphics[width=0.48\textwidth]{13tev-1jet.pdf}
 	\includegraphics[width=0.48\textwidth]{13tev-2jet.pdf}
 \caption{\label{fig:13tev}
-Measured differential $W+b$-jets cross-section, including single-top contributions, as a function of the transverse momentum of the $b$-jet, 
-in the case where the $b$-jet is the only jet in the fiducial region (a,c) or when there is an additional jet (b,d). 
-The measurements are compared to the Sherpa and Herwig calculations of $W+b$-jet production including resonant top contributions, but excluding finite width effects 
-and interference terms between top and non-top diagrams. The contributions from non-top diagrams alone are also shown.}
+  Measured differential $W+b$-jets cross-section, including single-top contributions, as a function of the
+  transverse momentum of the $b$-jet, in the case where the $b$-jet is the only jet in the fiducial region
+  (a,c) or when there is an additional jet (b,d).  The measurements are compared to the Sherpa and Herwig
+  calculations of $W+b$-jet production including resonant top contributions, but excluding finite width effects 
+  and interference terms between top and non-top diagrams. The contributions from non-top diagrams alone are
+  also shown.}
 \end{figure}
 
 \section{Diboson plus jet production}
 
-Processes in which two $W$-bosons and two jets (including possibly $b$-jets) are produced are of great interest at the LHC. Contributing 
-amplitudes include $t\bar{t}$ (with on- or off-shell top quarks) and vector-boson fusion diagrams including the Higgs boson as a propagator.
-In Sherpa, the leading order processes for $t\bar{t}$ and $tWb$ (both with on-shell tops), and $WWb\bar{b}$ (excluding all top contributions) were generated separately, and the full leading order $WWb\bar{b}$ process, including all top contributions was also generated for 
-comparison. All processes were generated for centre-of-mass energies of 13~TeV. 
+Processes in which two $W$-bosons and two jets (including possibly $b$-jets) are produced are of great interest
+at the LHC.  Contributing amplitudes include
+\begin{itemize}
+\item $t\bar{t}$ (with on- or off-shell top quarks),
+\item genuine QCD processes with $b$ quarks already entering from the initial state or being
+  pair-produced in the final state through gluon splitting amplitudes, and, to a lesser extent,
+\item electroweak processes such as vector-boson fusion diagrams including the Higgs boson
+  as a propagator and $b$-associated Higgs boson production.
+\end{itemize}
+In Sherpa, the leading order processes for $t\bar{t}$ and $tWb$ (both with on-shell tops), and $WWb\bar{b}$
+(excluding all top contributions) were generated separately, and the full leading order $WWb\bar{b}$ process,
+including all top contributions was also generated for comparison. All processes were generated for centre-of-mass
+energies of 13~TeV. 
 
-An initial set of basic selection cut were applied, requiring two isolated leptons with $|\eta| < 2.5, p_T > 25$~GeV and missing $E_T > 25$~GeV, typical of an experimental analysis. The multiplicity of jets (identified with the anti-$k_T$ algorithm, $R=0.4$, 
-$p_T > 25$~GeV, $|\eta| < 4.5$) in events passing these cuts is shown in Fig.~\ref{fig:wbf_before}a. It can be seen that the diagrams 
-involving at least one top quark dominate, though the contribution of non-top diagrams is significant at low jet multiplicities.
-Fig.~\ref{fig:wbf_before}b compares the incoherent sum of the different contributions with the coherently generated $WWb\bar{b}$ process. It
-can be seen that the interference terms are largely positive, though they become negative for jet multiplicities above four.
+An initial set of basic selection cut were applied, requiring two isolated leptons with $|\eta| < 2.5, p_T > 25$~GeV and
+missing $E_T > 25$~GeV, typical of an experimental analysis. The multiplicity of jets (identified with the anti-$k_T$
+algorithm, $R=0.4$, $p_T > 25$~GeV, $|\eta| < 4.5$) in events passing these cuts is shown in Fig.~\ref{fig:wbf_before}a.
+It can be seen that the diagrams involving at least one top quark dominate, though the contribution of non-top diagrams
+is significant at low jet multiplicities.  Fig.~\ref{fig:wbf_before}b compares the incoherent sum of the different
+contributions with the coherently generated $WWb\bar{b}$ process. It can be seen that the interference terms are largely
+positive.
+%I've commented this out: I am not sure if we actually see negative interference or statistics here
+% though they become negative for jet multiplicities above four.  
 
-Further cuts were applied to mimic a vector-boson-fusion like analysis, requiring that there are at least two jets in opposite hemispheres 
-of rapidity and with a rapidity difference of at least XX between them and having a dijet invariant mass above XX, and after an additional but
-on the transverse mass of the dilepton-missing-$E_T$ system (what is the cut??). Fig.~\ref{fig:wbf_after} shows that the same general features persist, with the interference terms being large and positive for jet mulitiplicities below five.
+Further cuts were applied to mimic a vector-boson-fusion like analysis, requiring that there are at least two jets in
+opposite hemispheres of rapidity and with a rapidity difference of at least XX between them and having a dijet invariant
+mass above XX, and after an additional cut on the transverse mass of the dilepton-missing-$E_T$ system (what is the cut??).
+Fig.~\ref{fig:wbf_after} shows that the same general features persist, with the interference terms being large and
+positive for jet mulitiplicities below five.
 
 \begin{figure}
 \centering
 	\includegraphics[width=0.48\textwidth]{WBF_njets_before_contribs.pdf}
 	\includegraphics[width=0.48\textwidth]{WBF_njets_before.pdf}
 \caption{\label{fig:wbf_before}
-13 TeV $WWb\bar{b}$ events simulated using Sherpa. (a) individual contributions (b) comparison between incoherent and coherent sums.}
+  13 TeV $WWb\bar{b}$ events simulated using Sherpa.
+  (a) individual contributions (b) comparison between incoherent and coherent sums.}
 \end{figure}
 
 \begin{figure}
@@ -200,20 +233,23 @@ on the transverse mass of the dilepton-missing-$E_T$ system (what is the cut??).
 	\includegraphics[width=0.48\textwidth]{WBF_njets_after_contribs.pdf}
 	\includegraphics[width=0.48\textwidth]{WBF_njets_after.pdf}
 \caption{\label{fig:wbf_after}
-13 TeV $WWb\bar{b}$ events simulated using Sherpa, after vector-boson-fusion selection cuts. 
-(a) individual contributions (b) comparison between incoherent and coherent sums.}
+  13 TeV $WWb\bar{b}$ events simulated using Sherpa, after vector-boson-fusion selection cuts. 
+  (a) individual contributions (b) comparison between incoherent and coherent sums.}
 \end{figure}
 
 \section{Conclusions}\label{sec:conclusions}
 
-This brief study exploits a measurement made by ATLAS, and the multi-process capabilities of Sherpa, to illustrate the fact
-that many apparently distinct processes may contribute to the same measurable final state. The treatement of the these processes by
-the experiments is important. Subtraction of irreducible background can increase the model-dependence of systematic uncertainties, and 
-is unphysical, in the sense that interference terms are not treated correctly. In this discussion, both these effects are observed.
-The 7~TeV $Wb$ measurement by ATLAS shows increased systematic uncertainties at high jet $p_T$ is top contributions are subtracted. 
-These contributions become more significant at 13~TeV, and so the problem can be expected to become worse. And Sherpa studies indicate
-that, even after realistic selection of vector-boson-fusion-like toplogies, interference terms are signficant in $WWbb$ production. 
-In conclusion, the treatment of irreducible background in future measurements at the LHC merits more careful attention.
+This brief study exploits a measurement made by ATLAS, and the multi-process capabilities of Sherpa,
+to illustrate the fact that many apparently distinct processes may contribute to the same measurable
+final state. The treatement of the these processes by the experiments is important. Subtraction of
+irreducible backgrounds can increase the model-dependence of systematic uncertainties, and is
+unphysical, in the sense that interference terms are not treated correctly. In this discussion,
+both these effects are observed.  The 7~TeV $Wb$ measurement by ATLAS shows increased systematic
+uncertainties in the region of high jet-$p_T$ if top contributions are subtracted.  These
+contributions will become more significant at 13~TeV, and so the problem can be expected to become
+worse. And Sherpa studies indicate that, even after realistic selection of vector-boson-fusion-like
+toplogies, interference terms are signficant in $WWbb$ production.  In conclusion, the treatment of
+irreducible background in future measurements at the LHC merits more careful attention.
 
 \bibliography{backsub}
 
