@@ -431,8 +431,8 @@ namespace Rivet {
           m_tm = (lepton_m.momentum() + bjet_m[0].momentum() + nu_m[0].momentum()).mass();
           m_bl_m = (lepton_m.momentum() + bjet_m[0].momentum()).mass();
 
-          h_mass_bl_m->fill(m_bl_m,1);
-          h_massZoom_bl_m->fill(m_bl_m,1);
+          h_mass_bl_m->fill(m_bl_m,weight);
+          h_massZoom_bl_m->fill(m_bl_m,weight);
           h_mass_tm->fill(m_tm,weight);
           h_massZoom_tm->fill(m_tm,weight);
         }
@@ -450,8 +450,8 @@ namespace Rivet {
           m_tp = (lepton_p.momentum() + bjet_p[0].momentum() + nu_p[0].momentum()).mass();
           m_bl_p = (lepton_p.momentum() + bjet_p[0].momentum()).mass();
 
-          h_mass_bl_p->fill(m_bl_p,1);
-          h_massZoom_bl_p->fill(m_bl_p,1);
+          h_mass_bl_p->fill(m_bl_p,weight);
+          h_massZoom_bl_p->fill(m_bl_p,weight);
           h_mass_tp->fill(m_tp,weight);
           h_massZoom_tp->fill(m_tp,weight);
         }
@@ -577,7 +577,7 @@ namespace Rivet {
     void analyze_HH(const Event& event){
       const double weight = event.weight();
       hh_njets_before->fill(alljets.size(),weight);
-      hh_njets_nbjets_before->fill(alljets.size(), bjets_central.size());
+      hh_njets_nbjets_before->fill(alljets.size(), bjets_central.size(), weight);
 
       // Objects used: MET, lepton_m, lepton_p, alljets, bjets_central, m_ll, m_trans_llMET
 
@@ -615,7 +615,7 @@ namespace Rivet {
       if(bjets_central.size() < bjets_central_min_hh) return; // bjets_central_min_hh = 2
       hh_cuts->fill(4,weight);
       hh_njets_after->fill(alljets.size(),weight);
-      hh_njets_nbjets_after->fill(alljets.size(), bjets_central.size());
+      hh_njets_nbjets_after->fill(alljets.size(), bjets_central.size(), weight);
 
       // 2 leading b-jets invariant mass
       double mBB = (bjets_central[0].momentum() + bjets_central[1].momentum()).mass();
